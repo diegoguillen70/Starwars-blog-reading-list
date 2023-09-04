@@ -1,49 +1,56 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
-import "../../styles/demo.css";
+import "../../styles/details.css";
 
-export const Details = () => {
-  const { store, actions } = useContext(Context);
+export const Details = (prps) => {
+  const { id } = useParams();
+  const { actions, store } = useContext(Context);
+
+  useEffect(() => {
+    actions.getDetails(store.url);
+  }, []);
 
   return (
-    <div className="container">
-      <ul className="list-group">
-        {store.demo.map((item, index) => {
-          return (
-            <li
-              key={index}
-              className="list-group-item d-flex justify-content-between"
-              style={{ background: item.background }}
-            >
-              <Link to={"/single/" + index}>
-                <span>Link to: {item.title}</span>
-              </Link>
-              {
-                // Conditional render example
-                // Check to see if the background is orange, if so, display the message
-                item.background === "orange" ? (
-                  <p style={{ color: item.initial }}>
-                    Check store/flux.js scroll to the actions to see the code
-                  </p>
-                ) : null
-              }
-              <button
-                className="btn btn-success"
-                onClick={() => actions.changeColor(index, "orange")}
-              >
-                Change Color
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-      <br />
-      <Link to="/">
-        <button className="btn btn-primary">Back home</button>
-      </Link>
-    </div>
+    <>
+      <div className="tabset mx-auto mt-5">
+        <input
+          type="radio"
+          name="tabset"
+          id="tab1"
+          aria-controls="marzen"
+          checked
+        />
+        <label htmlFor="tab1">Description</label>
+
+        {/* <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier" />
+        <label for="tab2">Rauchbier</label> */}
+
+        <div className="tab-panels">
+          <section id="marzen" className="tab-panel">
+            <h2>{store.pe}</h2>
+          </section>
+          {/* <section id="rauchbier" className="tab-panel">
+            <h2>6B. Rauchbier</h2>
+            <p>
+              <strong>Overall Impression:</strong> An elegant, malty German
+              amber lager with a balanced, complementary beechwood smoke
+              character. Toasty-rich malt in aroma and flavor, restrained
+              bitterness, low to high smoke flavor, clean fermentation profile,
+              and an attenuated finish are characteristic.
+            </p>
+            <p>
+              <strong>History:</strong> A historical specialty of the city of
+              Bamberg, in the Franconian region of Bavaria in Germany.
+              Beechwood-smoked malt is used to make a Märzen-style amber lager.
+              The smoke character of the malt varies by maltster; some breweries
+              produce their own smoked malt (rauchmalz).
+            </p>
+          </section> */}
+        </div>
+      </div>
+    </>
   );
 };

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import start_war from "../../img/start_war.png";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
   return (
     <nav className="navbar navbar-light bg-light me-5">
       <Link to="/">
@@ -22,11 +24,17 @@ export const Navbar = () => {
               Favorities
             </button>
             <ul className="dropdown-menu dropdown-menu-end">
-              <li>
-                <button className="dropdown-item" type="button">
+              {store.favorites.map((favorite, item) => {
+                return (
+                  <li key={item} className="d-flex justify-content-between">
+                    {favorite}{" "}
+                    <p onClick={() => actions.removeFavorite(favorite)}>🗑</p>
+                  </li>
+                );
+              })}
+              {/* <button className="dropdown-item" type="button">
                   Action
-                </button>
-              </li>
+                </button> */}
             </ul>
           </div>
         </Link>

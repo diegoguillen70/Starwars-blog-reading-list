@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useId } from "react";
 import { Context } from "./../store/appContext.js";
 import "../../styles/home.css";
 import Card from "../component/card.js";
@@ -6,7 +6,7 @@ import { element } from "prop-types";
 
 export const Home = () => {
   const { actions, store } = useContext(Context);
-
+  const itemID = useId();
   {
     if (store.loading) {
       return (
@@ -25,25 +25,52 @@ export const Home = () => {
     } else {
       return (
         <>
-          <h1 className="mx-auto w-75 text-danger mt-3">Characters</h1>
+          <h1 className="mx-auto w-75 text-danger mt-3">
+            Characters <i class="fa-solid fa-backward-step backward"></i>
+            <i class="fa-solid fa-forward-step forward"></i>
+          </h1>
           <div className="d-flex mx-auto text-center scroll-x w-75">
             {store.people.length > 0 &&
               store.people.map((person, item) => {
-                return <Card onTitle={person.name} />;
+                return (
+                  <Card
+                    key={item}
+                    object={person}
+                    url={`https://starwars-visualguide.com/assets/img/characters/${person.uid}.jpg`}
+                  />
+                );
               })}
           </div>
-          <h1 className="mx-auto w-75 text-danger mt-3">Planets</h1>
+          <h1 className="mx-auto w-75 text-danger mt-3">
+            Planets <i class="fa-solid fa-backward-step backward"></i>
+            <i class="fa-solid fa-forward-step forward"></i>
+          </h1>
           <div className="d-flex mx-auto text-center scroll-x w-75">
             {store.planets.length > 0 &&
               store.planets.map((planet, item) => {
-                return <Card onTitle={planet.name} />;
+                return (
+                  <Card
+                    key={item * 100}
+                    object={planet}
+                    url={`https://starwars-visualguide.com/assets/img/planets/${planet.uid}.jpg`}
+                  />
+                );
               })}
           </div>
-          <h1 className="mx-auto w-75 text-danger mt-3">Star Ships</h1>
+          <h1 className="mx-auto w-75 text-danger mt-3">
+            Star Ships <i class="fa-solid fa-backward-step backward"></i>
+            <i class="fa-solid fa-forward-step forward"></i>
+          </h1>
           <div className="d-flex mx-auto text-center scroll-x w-75">
             {store.starShips.length > 0 &&
               store.starShips.map((ship, item) => {
-                return <Card onTitle={ship.name} />;
+                return (
+                  <Card
+                    key={item * 1000}
+                    object={ship}
+                    url={`https://starwars-visualguide.com/assets/img/starships/${ship.uid}.jpg`}
+                  />
+                );
               })}
           </div>
         </>

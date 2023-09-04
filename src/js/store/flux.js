@@ -1,17 +1,17 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
+      loading: true,
       people: [],
       planets: [],
       starShips: [],
-      favorities: [],
-      loading: true,
+      details: [],
+      favorites: [],
+      currentDetails: [],
+      url: "",
     },
     actions: {
       // Use getActions to call a function within a fuction
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
-      },
       getPeople: () => {
         fetch("https://www.swapi.tech/api/people/")
           .then((resp) => {
@@ -53,6 +53,33 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
       setLoading: () => setStore({ loading: true }),
+      addFavorite: (character) => {
+        const store = getStore();
+        !store.favorites.includes(character.name) &&
+          setStore({ favorites: [character.name, ...store.favorites] });
+      },
+      removeFavorite: (character) => {
+        const store = getStore();
+        setStore({
+          favorites: store.favorites.filter((item) => item != character),
+        });
+      },
+      getDetails: (url) => {
+        //console.log(url);
+        fetch(url)
+          .then((resp) => {
+            return resp.json();
+          })
+          .then((dataJson) => {
+            //console.log(dataJson);
+            setStore({ currentDetails: dataJson.result });
+          })
+          .finally(() => setStore({ loading: false }))
+          .catch((error) => {
+            console.error("An error happened" + error);
+          });
+      },
+      setUrl: (url) => setStore({ url: url }),
     },
   };
 };
