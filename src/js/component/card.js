@@ -21,7 +21,7 @@ const Card = (props) => {
             to="/details/:id"
             className="btn btn-primary align-self-center my-0"
           >
-            Go somewhere
+            Details
           </Link>
           <span>☆</span>
         </div>
