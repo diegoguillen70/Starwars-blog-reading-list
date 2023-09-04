@@ -22,6 +22,8 @@
 }
 
 ul {
+  font-size: large;
+  font-family: "Roboto Mono", monospace;
   list-style-type: none;
   text-align: start;
 }

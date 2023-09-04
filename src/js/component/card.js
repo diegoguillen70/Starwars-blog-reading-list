@@ -4,9 +4,13 @@ import starWar from "../../img/start_war.png";
 import "../../styles/card.css";
 import { Context } from "../store/appContext";
 
-const Card = ({ url, object }) => {
+const Card = ({ url, object, select }) => {
   const img = useRef(null);
   const { store, actions } = useContext(Context);
+  function setParams() {
+    actions.setUrl(object.url);
+    actions.setSearch(select);
+  }
   //console.log(character);
   return (
     <div className="card-children">
@@ -26,7 +30,7 @@ const Card = ({ url, object }) => {
           <Link
             to={`/details/${object.uid}`}
             className="btn btn-primary align-self-center my-0"
-            onClick={() => actions.setUrl(object.url)}
+            onClick={() => setParams()}
           >
             Details
           </Link>

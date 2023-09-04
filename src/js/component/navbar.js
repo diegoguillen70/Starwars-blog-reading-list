@@ -28,7 +28,9 @@ export const Navbar = () => {
                 return (
                   <li key={item} className="d-flex justify-content-between">
                     {favorite}{" "}
-                    <p onClick={() => actions.removeFavorite(favorite)}>🗑</p>
+                    <p onClick={() => actions.removeFavorite(favorite.name)}>
+                      🗑
+                    </p>
                   </li>
                 );
               })}

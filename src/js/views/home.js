@@ -7,6 +7,7 @@ import { element } from "prop-types";
 export const Home = () => {
   const { actions, store } = useContext(Context);
   const itemID = useId();
+  //console.log(store.people);
   {
     if (store.loading) {
       return (
@@ -22,7 +23,7 @@ export const Home = () => {
           role="status"
         ></div>
       );
-    } else {
+    } else if (store.people) {
       return (
         <>
           <h1 className="mx-auto w-75 text-danger mt-3">
@@ -36,6 +37,7 @@ export const Home = () => {
                   <Card
                     key={item}
                     object={person}
+                    select={"characters"}
                     url={`https://starwars-visualguide.com/assets/img/characters/${person.uid}.jpg`}
                   />
                 );
@@ -52,6 +54,7 @@ export const Home = () => {
                   <Card
                     key={item * 100}
                     object={planet}
+                    select={"planets"}
                     url={`https://starwars-visualguide.com/assets/img/planets/${planet.uid}.jpg`}
                   />
                 );
@@ -68,6 +71,7 @@ export const Home = () => {
                   <Card
                     key={item * 1000}
                     object={ship}
+                    select={"starships"}
                     url={`https://starwars-visualguide.com/assets/img/starships/${ship.uid}.jpg`}
                   />
                 );

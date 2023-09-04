@@ -9,10 +9,19 @@ const getState = ({ getStore, getActions, setStore }) => {
       favorites: [],
       currentDetails: [],
       url: "",
+      search: "",
     },
     actions: {
       // Use getActions to call a function within a fuction
+
       getPeople: () => {
+        //localStorage.clear();
+        /*if (localStorage.getItem("peopleStorage")) {
+          console.log("No Fecth");
+          const peopleOnStorage = localStorage.getItem("peopleStorage");
+          console.log(peopleOnStorage);
+          setStore({ people: peopleOnStorage });
+        } else {*/
         fetch("https://www.swapi.tech/api/people/")
           .then((resp) => {
             return resp.json();
@@ -20,6 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((dataJson) => {
             //console.log(dataJson.results);
             setStore({ people: dataJson.results });
+            localStorage.setItem("peopleStorage", dataJson.results);
           })
           .catch((error) => {
             console.error("An error happened" + error);
@@ -80,6 +90,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
       setUrl: (url) => setStore({ url: url }),
+      setSearch: (search) => setStore({ search: search }),
     },
   };
 };

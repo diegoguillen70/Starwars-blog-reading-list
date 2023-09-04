@@ -11,8 +11,9 @@ export const Details = (props) => {
   const [details, setDetails] = useState([]);
   useEffect(() => {
     actions.setLoading(true);
+    console.log(store.url);
     //actions.getDetails(store.url);
-    fetch(`https://www.swapi.tech/api/people/${id}`)
+    fetch(store.url)
       .then((resp) => {
         return resp.json();
       })
@@ -20,12 +21,16 @@ export const Details = (props) => {
         //console.log(dataJson.result);
         setDetails(dataJson.result);
         actions.setLoading(false);
+        //localStorage.setItem("details", JSON.stringify(dataJson));
       })
       .catch((error) => {
         console.error("An error happened" + error);
       });
   }, []);
   details.properties && console.log(details.properties);
+  console.log(
+    `https://starwars-visualguide.com/assets/img/${store.search}/${id}.jpg`
+  );
   {
     if (store.loading) {
       // console.log(details);
@@ -49,13 +54,14 @@ export const Details = (props) => {
             <label htmlFor="tab1">Description</label>
             <img
               className="rounded float-start mx-5"
-              src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+              src={`https://starwars-visualguide.com/assets/img/${store.search}/${id}.jpg`}
             />
+
             <ul>
               <li>Name: {details.properties.name}</li>
               <li>DOB: {details.properties.birth_year}</li>
               <li>Eye Color: {details.properties.eye_color}</li>
-              <li>Hair Color: {details.properties.hair_colo}</li>
+              <li>Hair Color: {details.properties.hair_color}</li>
             </ul>
 
             <div className="tab-panels">
