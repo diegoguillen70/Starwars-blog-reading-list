@@ -26,8 +26,8 @@ export const Home = () => {
       return (
         <>
           <h1 className="mx-auto w-75 text-danger mt-3">
-            Characters <i class="fa-solid fa-backward-step backward"></i>
-            <i class="fa-solid fa-forward-step forward"></i>
+            Characters <i className="fa-solid fa-backward-step backward"></i>
+            <i className="fa-solid fa-forward-step forward"></i>
           </h1>
           <div className="d-flex mx-auto text-center scroll-x w-75">
             {store.people.length > 0 &&
@@ -42,8 +42,8 @@ export const Home = () => {
               })}
           </div>
           <h1 className="mx-auto w-75 text-danger mt-3">
-            Planets <i class="fa-solid fa-backward-step backward"></i>
-            <i class="fa-solid fa-forward-step forward"></i>
+            Planets <i className="fa-solid fa-backward-step backward"></i>
+            <i className="fa-solid fa-forward-step forward"></i>
           </h1>
           <div className="d-flex mx-auto text-center scroll-x w-75">
             {store.planets.length > 0 &&
@@ -58,8 +58,8 @@ export const Home = () => {
               })}
           </div>
           <h1 className="mx-auto w-75 text-danger mt-3">
-            Star Ships <i class="fa-solid fa-backward-step backward"></i>
-            <i class="fa-solid fa-forward-step forward"></i>
+            Star Ships <i className="fa-solid fa-backward-step backward"></i>
+            <i className="fa-solid fa-forward-step forward"></i>
           </h1>
           <div className="d-flex mx-auto text-center scroll-x w-75">
             {store.starShips.length > 0 &&

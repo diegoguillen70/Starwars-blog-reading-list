@@ -5,52 +5,67 @@ import { Context } from "../store/appContext";
 
 import "../../styles/details.css";
 
-export const Details = (prps) => {
+export const Details = (props) => {
   const { id } = useParams();
-  const { actions, store } = useContext(Context);
-
+  const { store, actions } = useContext(Context);
+  const [details, setDetails] = useState([]);
   useEffect(() => {
-    actions.getDetails(store.url);
+    actions.setLoading(true);
+    //actions.getDetails(store.url);
+    fetch(`https://www.swapi.tech/api/people/${id}`)
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((dataJson) => {
+        //console.log(dataJson.result);
+        setDetails(dataJson.result);
+        actions.setLoading(false);
+      })
+      .catch((error) => {
+        console.error("An error happened" + error);
+      });
   }, []);
+  details.properties && console.log(details.properties);
+  {
+    if (store.loading) {
+      // console.log(details);
+      return (
+        <div
+          className="spinner-grow mx-auto"
+          style={{
+            width: "3rem",
+            height: "3rem",
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+          }}
+          role="status"
+        ></div>
+      );
+    } else if (details.properties) {
+      return (
+        <>
+          <div className="tabset mx-auto mt-5">
+            <label htmlFor="tab1">Description</label>
+            <img
+              className="rounded float-start mx-5"
+              src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+            />
+            <ul>
+              <li>Name: {details.properties.name}</li>
+              <li>DOB: {details.properties.birth_year}</li>
+              <li>Eye Color: {details.properties.eye_color}</li>
+              <li>Hair Color: {details.properties.hair_colo}</li>
+            </ul>
 
-  return (
-    <>
-      <div className="tabset mx-auto mt-5">
-        <input
-          type="radio"
-          name="tabset"
-          id="tab1"
-          aria-controls="marzen"
-          checked
-        />
-        <label htmlFor="tab1">Description</label>
-
-        {/* <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier" />
-        <label for="tab2">Rauchbier</label> */}
-
-        <div className="tab-panels">
-          <section id="marzen" className="tab-panel">
-            <h2>{store.pe}</h2>
-          </section>
-          {/* <section id="rauchbier" className="tab-panel">
-            <h2>6B. Rauchbier</h2>
-            <p>
-              <strong>Overall Impression:</strong> An elegant, malty German
-              amber lager with a balanced, complementary beechwood smoke
-              character. Toasty-rich malt in aroma and flavor, restrained
-              bitterness, low to high smoke flavor, clean fermentation profile,
-              and an attenuated finish are characteristic.
-            </p>
-            <p>
-              <strong>History:</strong> A historical specialty of the city of
-              Bamberg, in the Franconian region of Bavaria in Germany.
-              Beechwood-smoked malt is used to make a Märzen-style amber lager.
-              The smoke character of the malt varies by maltster; some breweries
-              produce their own smoked malt (rauchmalz).
-            </p>
-          </section> */}
-        </div>
-      </div>
-    </>
-  );
+            <div className="tab-panels">
+              <section id="marzen" className="tab-panel">
+                <h2></h2>
+              </section>
+            </div>
+          </div>
+        </>
+      );
+    }
+  }
 };

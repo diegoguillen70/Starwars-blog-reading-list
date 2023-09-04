@@ -52,7 +52,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.error("An error happened" + error);
           });
       },
-      setLoading: () => setStore({ loading: true }),
+      setLoading: (state) => setStore({ loading: state }),
       addFavorite: (character) => {
         const store = getStore();
         !store.favorites.includes(character.name) &&
@@ -71,7 +71,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return resp.json();
           })
           .then((dataJson) => {
-            //console.log(dataJson);
+            console.log(dataJson);
             setStore({ currentDetails: dataJson.result });
           })
           .finally(() => setStore({ loading: false }))
