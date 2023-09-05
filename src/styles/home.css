@@ -2,6 +2,10 @@
   box-sizing: content-box;
 }
 
+.cards-div {
+  border-radius: 10px;
+}
+
 .scroll-x {
   display: flex;
   flex-wrap: nowrap;
@@ -15,7 +19,7 @@
   border-radius: 10px;
   border-color: darkgray;
   border-style: solid;
-  margin-left: 10px;
+  margin-left: 20px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

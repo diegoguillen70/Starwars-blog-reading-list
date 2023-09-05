@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
@@ -9,10 +9,19 @@ export const Details = (props) => {
   const { id } = useParams();
   const { store, actions } = useContext(Context);
   const [details, setDetails] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     actions.setLoading(true);
-    console.log(store.url);
+    // console.log(store.url);
     //actions.getDetails(store.url);
+    /*if (localStorage.getItem("detailsStorage")) {
+      console.log("No Fecth in Details");
+      const detailsOnStorage = localStorage.getItem("detailsStorage");
+      console.log(JSON.parse(detailsOnStorage));
+      setDetails(JSON.parse(detailsOnStorage));
+      actions.setLoading(false);
+    } else {*/
+    actions.setLoading(true);
     fetch(store.url)
       .then((resp) => {
         return resp.json();
@@ -20,17 +29,18 @@ export const Details = (props) => {
       .then((dataJson) => {
         //console.log(dataJson.result);
         setDetails(dataJson.result);
+        localStorage.setItem("detailsStorage", JSON.stringify(dataJson.result));
         actions.setLoading(false);
         //localStorage.setItem("details", JSON.stringify(dataJson));
       })
       .catch((error) => {
-        console.error("An error happened" + error);
+        console.error("An error happened " + error);
+        navigate("/");
       });
+    /*  }*/
   }, []);
-  details.properties && console.log(details.properties);
-  console.log(
-    `https://starwars-visualguide.com/assets/img/${store.search}/${id}.jpg`
-  );
+  //details.properties && console.log(details.properties);
+  //console.log(`https://starwars-visualguide.com/assets/img/${store.search}/${id}.jpg`);
   {
     if (store.loading) {
       // console.log(details);
@@ -48,28 +58,33 @@ export const Details = (props) => {
         ></div>
       );
     } else if (details.properties) {
+      const entries = Object.entries(details.properties).slice(0, 7);
+
+      //console.log(entries);
       return (
         <>
-          <div className="tabset mx-auto mt-5">
-            <label htmlFor="tab1">Description</label>
-            <img
-              className="rounded float-start mx-5"
-              src={`https://starwars-visualguide.com/assets/img/${store.search}/${id}.jpg`}
-            />
+          <section className="details-container">
+            <div className="tabset mx-auto mt-5 bg-light">
+              <label htmlFor="tab1">Description</label>
+              <img
+                className="rounded float-start me-5 img-details"
+                src={`https://starwars-visualguide.com/assets/img/${store.search}/${id}.jpg`}
+              />
 
-            <ul>
-              <li>Name: {details.properties.name}</li>
-              <li>DOB: {details.properties.birth_year}</li>
-              <li>Eye Color: {details.properties.eye_color}</li>
-              <li>Hair Color: {details.properties.hair_color}</li>
-            </ul>
+              <ul>
+                <li>Name: {details.properties.name}</li>
+                {entries.map(([key, val] = entry) => {
+                  return <li>{`${key}: ${val}`}</li>;
+                })}
+              </ul>
 
-            <div className="tab-panels">
-              <section id="marzen" className="tab-panel">
-                <h2></h2>
-              </section>
+              <div className="tab-panels">
+                <section id="marzen" className="tab-panel">
+                  <h2></h2>
+                </section>
+              </div>
             </div>
-          </div>
+          </section>
         </>
       );
     }

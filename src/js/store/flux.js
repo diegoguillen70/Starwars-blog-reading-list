@@ -16,51 +16,80 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getPeople: () => {
         //localStorage.clear();
-        /*if (localStorage.getItem("peopleStorage")) {
-          console.log("No Fecth");
+        if (localStorage.getItem("peopleStorage")) {
+          console.log("No Fecth in People");
           const peopleOnStorage = localStorage.getItem("peopleStorage");
-          console.log(peopleOnStorage);
-          setStore({ people: peopleOnStorage });
-        } else {*/
-        fetch("https://www.swapi.tech/api/people/")
-          .then((resp) => {
-            return resp.json();
-          })
-          .then((dataJson) => {
-            //console.log(dataJson.results);
-            setStore({ people: dataJson.results });
-            localStorage.setItem("peopleStorage", dataJson.results);
-          })
-          .catch((error) => {
-            console.error("An error happened" + error);
-          });
+          console.log(JSON.parse(peopleOnStorage));
+          setStore({ people: JSON.parse(peopleOnStorage), loading: false });
+        } else {
+          fetch("https://www.swapi.tech/api/people/")
+            .then((resp) => {
+              return resp.json();
+            })
+            .then((dataJson) => {
+              //console.log(dataJson.results);
+              setStore({ people: dataJson.results });
+              localStorage.setItem(
+                "peopleStorage",
+                JSON.stringify(dataJson.results)
+              );
+            })
+            .catch((error) => {
+              console.error("An error happened" + error);
+            });
+        }
       },
       getPlanets: () => {
-        fetch("https://www.swapi.tech/api/planets/")
-          .then((resp) => {
-            return resp.json();
-          })
-          .then((dataJson) => {
-            //console.log(dataJson.results);
-            setStore({ planets: dataJson.results });
-          })
-          .catch((error) => {
-            console.error("An error happened" + error);
-          });
+        if (localStorage.getItem("planetsStorage")) {
+          console.log("No Fecth in Planets");
+          const planetsOnStorage = localStorage.getItem("planetsStorage");
+          console.log(JSON.parse(planetsOnStorage));
+          setStore({ planets: JSON.parse(planetsOnStorage), loading: false });
+        } else {
+          fetch("https://www.swapi.tech/api/planets/")
+            .then((resp) => {
+              return resp.json();
+            })
+            .then((dataJson) => {
+              //console.log(dataJson.results);
+              setStore({ planets: dataJson.results });
+              localStorage.setItem(
+                "planetsStorage",
+                JSON.stringify(dataJson.results)
+              );
+            })
+            .catch((error) => {
+              console.error("An error happened" + error);
+            });
+        }
       },
       getStarShips: () => {
-        fetch("https://www.swapi.tech/api/starships/")
-          .then((resp) => {
-            return resp.json();
-          })
-          .then((dataJson) => {
-            //console.log(dataJson.results);
-            setStore({ starShips: dataJson.results });
-          })
-          .finally(() => setStore({ loading: false }))
-          .catch((error) => {
-            console.error("An error happened" + error);
+        if (localStorage.getItem("starShipsStorage")) {
+          console.log("No Fecth in StarShips");
+          const startShipsOnStorage = localStorage.getItem("starShipsStorage");
+          console.log(JSON.parse(startShipsOnStorage));
+          setStore({
+            starShips: JSON.parse(startShipsOnStorage),
+            loading: false,
           });
+        } else {
+          fetch("https://www.swapi.tech/api/starships/")
+            .then((resp) => {
+              return resp.json();
+            })
+            .then((dataJson) => {
+              //console.log(dataJson.results);
+              setStore({ starShips: dataJson.results });
+              localStorage.setItem(
+                "starShipsStorage",
+                JSON.stringify(dataJson.results)
+              );
+            })
+            .finally(() => setStore({ loading: false }))
+            .catch((error) => {
+              console.error("An error happened" + error);
+            });
+        }
       },
       setLoading: (state) => setStore({ loading: state }),
       addFavorite: (character) => {

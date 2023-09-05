@@ -6,7 +6,7 @@ import { Context } from "../store/appContext";
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
   return (
-    <nav className="navbar navbar-light bg-light me-5">
+    <nav className="navbar navbar-light bg-light fixed-top">
       <Link to="/">
         <span className="navbar-brand mx-5 h1">
           <img src={start_war} style={{ width: "80px" }} />
@@ -17,7 +17,7 @@ export const Navbar = () => {
           <div className="btn-group">
             <button
               type="button"
-              className="btn btn-primary dropdown-toggle"
+              className="btn btn-primary dropdown-toggle me-5"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
@@ -28,9 +28,7 @@ export const Navbar = () => {
                 return (
                   <li key={item} className="d-flex justify-content-between">
                     {favorite}{" "}
-                    <p onClick={() => actions.removeFavorite(favorite.name)}>
-                      🗑
-                    </p>
+                    <p onClick={() => actions.removeFavorite(favorite)}>🗑</p>
                   </li>
                 );
               })}

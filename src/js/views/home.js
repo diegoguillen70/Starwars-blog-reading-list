@@ -26,11 +26,11 @@ export const Home = () => {
     } else if (store.people) {
       return (
         <>
-          <h1 className="mx-auto w-75 text-danger mt-3">
+          <h1 className="mx-auto w-75 text-danger mt-5">
             Characters <i className="fa-solid fa-backward-step backward"></i>
             <i className="fa-solid fa-forward-step forward"></i>
           </h1>
-          <div className="d-flex mx-auto text-center scroll-x w-75">
+          <div className="d-flex mx-auto text-center scroll-x w-75 cards-div">
             {store.people.length > 0 &&
               store.people.map((person, item) => {
                 return (
@@ -47,7 +47,7 @@ export const Home = () => {
             Planets <i className="fa-solid fa-backward-step backward"></i>
             <i className="fa-solid fa-forward-step forward"></i>
           </h1>
-          <div className="d-flex mx-auto text-center scroll-x w-75">
+          <div className="d-flex mx-auto text-center scroll-x w-75 cards-div">
             {store.planets.length > 0 &&
               store.planets.map((planet, item) => {
                 return (
@@ -64,7 +64,7 @@ export const Home = () => {
             Star Ships <i className="fa-solid fa-backward-step backward"></i>
             <i className="fa-solid fa-forward-step forward"></i>
           </h1>
-          <div className="d-flex mx-auto text-center scroll-x w-75">
+          <div className="d-flex mx-auto text-center scroll-x w-75 cards-div">
             {store.starShips.length > 0 &&
               store.starShips.map((ship, item) => {
                 return (
